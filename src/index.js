@@ -1,27 +1,22 @@
-//require ('dotenv').config({path:'./env'})
-import dotenv from 'dotenv'
-import express from 'express'
-import connectDb from './db/index.js';
-const app = express();
-//load environment
+// require('dotenv').config({path: './env'})
+import dotenv from "dotenv"
+import connectDB from "./db/index.js";
+import {app} from './app.js'
 dotenv.config({
-path:'./env'
-});
-
-connectDb()
-.then(() => {
-    const port = process.env.PORT || 3600;
-    // Start the server only after the database connection is successful
-    app.listen(port, () => {
-      console.log(`App is running on Port ${port}`);
-    });
-  })
-.catch((err)=>{
-console.log("error occured while connection",err);
-process.exit(1);
+    path: './.env'
 })
 
-export default app;
+
+
+connectDB()
+.then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+    })
+})
+.catch((err) => {
+    console.log("MONGO db connection failed !!! ", err);
+})
 
 
 
@@ -30,21 +25,27 @@ export default app;
 
 
 
-// import express from 'express'
-// (async ()=>{
-//     try {
-//    await  mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)   
-//    application.on("error",(error)=>{
-//     console.log("error",error);
-//     throw error;
-// })
-//     app.listen(process.env.PORT,()=>{
-// console.log(`port is listening on ${process.env.PORT}`)
-//     })
-   
-      
-//     } catch (error) {
-//       console.error("ERROR",error) ;
-//       throw error 
-//     }
-// })()
+
+
+/*
+import express from "express"
+const app = express()
+( async () => {
+    try {
+        await mongoose.connect(`${process.env.MONGODB_URI}/${DB_NAME}`)
+        app.on("errror", (error) => {
+            console.log("ERRR: ", error);
+            throw error
+        })
+
+        app.listen(process.env.PORT, () => {
+            console.log(`App is listening on port ${process.env.PORT}`);
+        })
+
+    } catch (error) {
+        console.error("ERROR: ", error)
+        throw err
+    }
+})()
+
+*/
